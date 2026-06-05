@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free WiFi</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #111;
+    }
+
+    .card {
+      background: white;
+      width: 90%;
+      max-width: 420px;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    .wifi {
+      font-size: 56px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 10px 0;
+      font-size: 34px;
+    }
+
+    p {
+      color: #555;
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+
+    button {
+      background: #111;
+      color: white;
+      border: none;
+      padding: 16px 28px;
+      font-size: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background: #333;
+    }
+
+    #videoBox {
+      display: none;
+      margin-top: 25px;
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    #videoBox iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .small {
+      font-size: 12px;
+      color: #888;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="wifi">📶</div>
+    <h1>Free WiFi</h1>
+    <p>Tap below to connect to the dorm WiFi network.</p>
+
+    <button onclick="connectWifi()">Connect</button>
+
+    <div id="videoBox">
+      <iframe
+        id="rickFrame"
+        allow="autoplay; fullscreen"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="small">Secure campus guest connection</div>
+  </div>
+
+  <script>
+    function connectWifi() {
+      document.querySelector("button").style.display = "none";
+      document.querySelector("p").innerText = "Connecting...";
+
+      const videoBox = document.getElementById("videoBox");
+      const frame = document.getElementById("rickFrame");
+
+      videoBox.style.display = "block";
+
+      frame.src = "https://archive.org/embed/Rick_Astley_Never_Gonna_Give_You_Up?start=44&autoplay=1";
+
+      setTimeout(() => {
+        document.querySelector("p").innerText = "Connection established.";
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
