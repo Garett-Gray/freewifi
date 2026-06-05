@@ -9,7 +9,7 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      background: #f2f4f7;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -20,21 +20,21 @@
     .card {
       background: white;
       width: 90%;
-      max-width: 420px;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      max-width: 430px;
+      padding: 32px;
+      border-radius: 18px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.16);
       text-align: center;
     }
 
     .wifi {
-      font-size: 56px;
-      margin-bottom: 10px;
+      font-size: 58px;
+      margin-bottom: 8px;
     }
 
     h1 {
-      margin: 10px 0;
-      font-size: 34px;
+      margin: 8px 0;
+      font-size: 36px;
     }
 
     p {
@@ -58,23 +58,12 @@
       background: #333;
     }
 
-    #videoBox {
+    #video {
       display: none;
-      margin-top: 25px;
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 12px;
-    }
-
-    #videoBox iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
+      margin-top: 24px;
       width: 100%;
-      height: 100%;
-      border: 0;
+      border-radius: 14px;
+      background: #000;
     }
 
     .small {
@@ -89,36 +78,43 @@
   <div class="card">
     <div class="wifi">📶</div>
     <h1>Free WiFi</h1>
-    <p>Tap below to connect to the dorm WiFi network.</p>
+    <p id="message">Tap below to connect to the dorm WiFi network.</p>
 
-    <button onclick="connectWifi()">Connect</button>
+    <button id="connectBtn" onclick="connectWifi()">Connect</button>
 
-    <div id="videoBox">
-      <iframe
-        id="rickFrame"
-        allow="autoplay; fullscreen"
-        allowfullscreen>
-      </iframe>
-    </div>
+    <video id="video" controls playsinline>
+      <source src="PUT-YOUR-MP4-LINK-HERE" type="video/mp4">
+      Your browser does not support video playback.
+    </video>
 
     <div class="small">Secure campus guest connection</div>
   </div>
 
   <script>
     function connectWifi() {
-      document.querySelector("button").style.display = "none";
-      document.querySelector("p").innerText = "Connecting...";
+      const button = document.getElementById("connectBtn");
+      const message = document.getElementById("message");
+      const video = document.getElementById("video");
 
-      const videoBox = document.getElementById("videoBox");
-      const frame = document.getElementById("rickFrame");
+      button.style.display = "none";
+      message.innerText = "Connecting...";
 
-      videoBox.style.display = "block";
+      video.style.display = "block";
+      video.currentTime = 44;
+      video.volume = 1.0;
+      video.muted = false;
 
-      frame.src = "https://archive.org/embed/Rick_Astley_Never_Gonna_Give_You_Up?start=44&autoplay=1";
+      const playPromise = video.play();
 
-      setTimeout(() => {
-        document.querySelector("p").innerText = "Connection established.";
-      }, 1000);
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            message.innerText = "Connection established.";
+          })
+          .catch(() => {
+            message.innerText = "Tap play to finish connecting.";
+          });
+      }
     }
   </script>
 </body>
